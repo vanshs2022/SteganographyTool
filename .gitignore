@@ -1,0 +1,5 @@
+# exclude docs
+/DOCS
+
+# exclude pycache
+/__pycache__

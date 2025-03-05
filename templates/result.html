@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Result</title>
+    <link rel="stylesheet" href="./static/result.css">
+</head>
+<body>
+    <div class="result-container">
+        <h1>Steganography Result</h1>
+
+        {% if mode == "encode" %}
+            <h2>Encoded Image</h2>
+            <div class="button-container">
+                <button id="show-image-btn">Show Image</button>
+                <a href="{{ image }}" download>
+                    <button>Download Image</button>
+                </a>
+                <a href="/">
+                    <button>Go Back</button>
+                </a>
+            </div>
+        {% endif %}
+
+        
+        
+        <!-- Image Preview -->
+        <div id="image-preview" class="hidden">
+            <span id="close-preview">&times;</span>
+            <img id="preview-image" src="{{ image }}" alt="Encoded Image">
+        </div>
+        
+        {% if mode == "decode" %}
+            <div id="message-container">
+                <h2>Decoded Message</h2>
+                <p id="hidden-message">{{ message }}</p>
+            </div>
+        {% endif %}
+    </div>
+
+    <script>
+        console.log("Decoded");
+        document.addEventListener("DOMContentLoaded", function () {
+            let showImageBtn = document.getElementById("show-image-btn");
+            let imagePreview = document.getElementById("image-preview");
+            let closePreview = document.getElementById("close-preview");
+
+            // Show Image Button Click
+            showImageBtn?.addEventListener("click", function () {
+                imagePreview.classList.remove("hidden");
+            });
+
+            // Close Image Preview
+            closePreview?.addEventListener("click", function () {
+                imagePreview.classList.add("hidden");
+            });
+        });
+    </script>
+</body>
+</html>

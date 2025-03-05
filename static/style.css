@@ -1,0 +1,117 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #121212; /* Deep Charcoal */
+    color: #E4E4E4; /* Soft Ivory White */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    padding: 40px;
+    overflow: hidden;
+}
+
+h1 {
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #D8D8D8;
+    text-align: center;
+}
+
+h2 {
+    font-size: 1.8rem;
+    font-weight: 500;
+    margin-bottom: 15px;
+    color: #B8B8B8;
+    text-align: center;
+}
+
+/* Parent container for side-by-side forms */
+.form-container {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    flex-wrap: wrap; /* Ensures responsiveness */
+    margin-top: 20px;
+}
+
+/* Glassy effect for forms */
+form {
+    background: rgba(30, 42, 56, 0.4); /* Glass effect */
+    backdrop-filter: blur(12px); /* Frosted glass */
+    border-radius: 12px;
+    padding: 30px;
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Input fields */
+input[type="file"],
+input[type="text"] {
+    width: 80%;
+    padding: 12px;
+    margin: 12px 0;
+    border: none;
+    background: rgba(255, 255, 255, 0.1);
+    color: #E4E4E4;
+    font-size: 1rem;
+    border-radius: 8px;
+    outline: none;
+    text-align: center;
+    transition: background 0.3s ease-in-out;
+}
+
+input[type="file"]::file-selector-button {
+    background: #394867; /* Deep Royal Blue */
+    color: #E4E4E4;
+    border: none;
+    padding: 8px 14px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background 0.3s;
+}
+
+input[type="file"]::file-selector-button:hover {
+    background: #2C3E50; /* Darker Blue */
+}
+
+/* Buttons */
+button {
+    background: #394867; /* Deep Royal Blue */
+    color: #E4E4E4;
+    border: none;
+    padding: 12px 18px;
+    font-size: 1rem;
+    font-weight: 500;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+    margin-top: 10px;
+}
+
+button:hover {
+    background: #A68D60; /* Subtle Gold */
+    color: #121212;
+}
+
+/* Placeholder styling */
+::placeholder {
+    color: #A9B3BE;
+}
+
+/* Responsive Design */
+@media (max-width: 800px) {
+    .form-container {
+        flex-direction: column; /* Stack forms vertically on small screens */
+        align-items: center;
+    }
+}

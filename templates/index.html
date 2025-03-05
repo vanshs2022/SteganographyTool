@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Steganography</title>
+    <link rel="stylesheet" href="./static/style.css">
+</head>
+<body>
+    <h1>Image Steganography Tool</h1>
+
+    <div class="form-container">
+        <form action="/encode" method="post" enctype="multipart/form-data">
+            <h2>Encode a Message</h2>
+            <input type="file" name="image" required>
+            <input type="text" name="message" placeholder="Enter secret message" required>
+            <button type="submit">Encode</button>
+        </form>
+    
+        <form action="/decode" method="post" enctype="multipart/form-data">
+            <h2>Decode a Message</h2>
+            <input type="file" name="image" required>
+            <button type="submit">Decode</button>
+        </form>
+    </div>
+    
+</body>
+<script src="./static/script.js"></script>
+</html>
