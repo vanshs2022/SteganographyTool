@@ -1,8 +1,7 @@
 import os
-from flask import Flask, render_template, request, send_file
+from flask import Flask, render_template, request
 from werkzeug.utils import secure_filename
-from steganography_updated import encode_image, decode_image
-from PIL import Image
+from steganography_updated import encode_image, decode_image, authentication_store, authentication_compare
 
 app = Flask(__name__)
 
@@ -14,6 +13,42 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 @app.route("/")
 def index():
     return render_template("index.html")
+
+@app.route("/password")
+def password_page():
+    return render_template("password.html")
+
+@app.route("/store_password", methods=["POST"])
+def store_password():
+    password = request.form["password"]
+    image = request.files["image"]
+
+    if image.filename == "":
+        return render_template("password.html", message="No image selected for storing password!")
+
+    img_path = os.path.join(app.config["UPLOAD_FOLDER"], secure_filename(image.filename))
+    image.save(img_path)
+    
+    hashed_img_path = os.path.join(app.config["UPLOAD_FOLDER"], "hashed_" + image.filename)
+
+    authentication_store(img_path, password, hashed_img_path)
+    return render_template("password.html", message="Password stored successfully!")
+
+@app.route("/compare_password", methods=["POST"])
+def compare_password():
+    password = request.form["password"]
+    image = request.files["image"]
+
+    if image.filename == "":
+        return render_template("password.html", message="No image selected for verifying password!")
+
+    img_path = os.path.join(app.config["UPLOAD_FOLDER"], secure_filename(image.filename))
+    image.save(img_path)
+
+    if authentication_compare(img_path, password):
+        return render_template("password.html", message="Password match!")
+    else:
+        return render_template("password.html", message="Password does not match!")
 
 @app.route("/encode", methods=["POST"])
 def encode():
@@ -47,7 +82,6 @@ def decode():
         return render_template("result.html", message=f"Error decoding image: {e}", mode="decode")
 
     return render_template("result.html", message=f"{hidden_message}", mode="decode")
-
 
 if __name__ == "__main__":
     app.run(debug=True)

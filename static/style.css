@@ -38,6 +38,7 @@ h2 {
     justify-content: center;
     flex-wrap: wrap; /* Ensures responsiveness */
     margin-top: 20px;
+    margin-bottom: 200px;
 }
 
 /* Glassy effect for forms */
@@ -55,7 +56,8 @@ form {
 
 /* Input fields */
 input[type="file"],
-input[type="text"] {
+input[type="text"],
+input[type="password"] {
     width: 80%;
     padding: 12px;
     margin: 12px 0;
@@ -103,9 +105,59 @@ button:hover {
     color: #121212;
 }
 
-/* Placeholder styling */
-::placeholder {
-    color: #A9B3BE;
+/* Password Store Section - Moved to Bottom Right */
+.password-store {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    display: flex;
+    align-items: center;
+}
+
+/* Arrow Text */
+.arrow-text {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #E4E4E4;
+    margin-right: 10px;
+    animation: moveArrow 1.5s infinite alternate ease-in-out;
+}
+
+/* Store Password Button */
+.store-btn {
+    background: #2C3E50;
+    color: #E4E4E4;
+    padding: 10px 18px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background 0.3s ease-in-out;
+}
+
+.store-btn:hover {
+    background: #A68D60; /* Subtle Gold */
+    color: #121212;
+}
+
+#password{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    form{
+        margin: 20px;
+    }
+}
+
+/* Arrow Animation */
+@keyframes moveArrow {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(10px);
+    }
 }
 
 /* Responsive Design */
@@ -113,5 +165,17 @@ button:hover {
     .form-container {
         flex-direction: column; /* Stack forms vertically on small screens */
         align-items: center;
+    }
+
+    .password-store {
+        bottom: 20px;
+        right: 50%;
+        transform: translateX(50%);
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .arrow-text {
+        margin-bottom: 5px;
     }
 }
