@@ -1,11 +1,32 @@
 import numpy as np
 from PIL import Image
+from Crypto.Cipher import AES
+from Crypto.Util.Padding import pad, unpad
+import base64
+
+# Fixed 32-byte (256-bit) key and 16-byte IV
+KEY = b"0123456789abcdef0123456789abcdef"  # 32 bytes for AES-256
+IV = b"abcdef9876543210"  # 16 bytes for AES block size
+
+def encrypt_text(plain_text):
+    cipher = AES.new(KEY, AES.MODE_CBC, IV)  # Create AES cipher in CBC mode
+    padded_text = pad(plain_text.encode(), AES.block_size)  # Pad text
+    encrypted_bytes = cipher.encrypt(padded_text)  # Encrypt text
+    return base64.b64encode(encrypted_bytes).decode()  # Encode to Base64 for easy storage
+
+def decrypt_text(encrypted_text):
+    cipher = AES.new(KEY, AES.MODE_CBC, IV)  # Create AES cipher
+    encrypted_bytes = base64.b64decode(encrypted_text)  # Decode from Base64
+    decrypted_text = unpad(cipher.decrypt(encrypted_bytes), AES.block_size)  # Decrypt and remove padding
+    return decrypted_text.decode()  # Convert bytes to string
 
 def encode_image(image_path, message, output_path):
     img = Image.open(image_path).convert("RGB")
     img_array = np.array(img)
 
-    binary_message = ''.join(format(ord(char), '08b') for char in message) + '00000000'
+    encrypted_message = encrypt_text(message)
+    
+    binary_message = ''.join(format(ord(char), '08b') for char in encrypted_message) + '00000000'
 
     flat_pixels = img_array.flatten()
     
@@ -32,7 +53,7 @@ def decode_image(image_path):
 
     chars = ["".join(binary_message[i:i+8]) for i in range(0, len(binary_message)-8, 8)]
     message = "".join(chr(int(char, 2)) for char in chars)
+    
+    message = decrypt_text(message)
 
-    return message
-
-# Numpy use made the code faster than the arrays and the similar reason for is there for it's use in ML as arrays make the code slower, even some platforms listed that numpy is around 10x faster than the array
+    return message    
