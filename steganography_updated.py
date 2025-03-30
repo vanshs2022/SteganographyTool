@@ -1,12 +1,17 @@
 import numpy as np
 from PIL import Image
+import os
 from Crypto.Cipher import AES
 from Crypto.Util.Padding import pad, unpad
 import base64
+from dotenv import load_dotenv
 
-# Fixed 32-byte (256-bit) key and 16-byte IV
-KEY = b"0123456789abcdef0123456789abcdef"  # 32 bytes for AES-256
-IV = b"abcdef9876543210"  # 16 bytes for AES block size
+# Load environment variables from .env file
+load_dotenv()
+
+# Access environment variables
+KEY = os.getenv("KEY").encode()
+IV = os.getenv("IV").encode()
 
 def encrypt_text(plain_text):
     cipher = AES.new(KEY, AES.MODE_CBC, IV)  # Create AES cipher in CBC mode

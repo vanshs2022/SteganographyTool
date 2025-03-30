@@ -3,3 +3,5 @@
 
 # exclude pycache
 /__pycache__
+
+/.env
