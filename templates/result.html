@@ -22,10 +22,7 @@
                 </a>
             </div>
         {% endif %}
-
-        
-        
-        <!-- Image Preview -->
+ 
         <div id="image-preview" class="hidden">
             <span id="close-preview">&times;</span>
             <img id="preview-image" src="{{ image }}" alt="Encoded Image">
@@ -46,12 +43,10 @@
             let imagePreview = document.getElementById("image-preview");
             let closePreview = document.getElementById("close-preview");
 
-            // Show Image Button Click
             showImageBtn?.addEventListener("click", function () {
                 imagePreview.classList.remove("hidden");
             });
 
-            // Close Image Preview
             closePreview?.addEventListener("click", function () {
                 imagePreview.classList.add("hidden");
             });
