@@ -1,0 +1,7 @@
+Flask
+gunicorn
+Crypto
+python-dotenv
+numpy
+willow
+werkzeug
