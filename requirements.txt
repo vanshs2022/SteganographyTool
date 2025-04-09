@@ -3,5 +3,5 @@ gunicorn
 Crypto
 python-dotenv
 numpy
-willow
+pillow
 werkzeug
