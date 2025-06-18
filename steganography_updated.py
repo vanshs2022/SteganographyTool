@@ -33,12 +33,12 @@ def encode_image(image_path, message, output_path):
     binary_message = ''.join(format(ord(char), '08b') for char in encrypted_message) + '00000000'
 
     flat_pixels = img_array.flatten()
-    
+
     if len(binary_message) > len(flat_pixels):
         raise ValueError("Message too large for image")
 
     for i in range(len(binary_message)):
-        flat_pixels[i] = (flat_pixels[i] & ~1) | int(binary_message[i])
+        flat_pixels[i] = np.uint8((int(flat_pixels[i]) & 0xFE) | int(binary_message[i]))
 
     encoded_img = flat_pixels.reshape(img_array.shape)
     Image.fromarray(encoded_img).save(output_path, "PNG")
@@ -77,11 +77,10 @@ def authentication_store(image_path, password, output_path):
         raise ValueError("Hash too large for image")
 
     for i in range(len(binary_hash)):
-        flat_pixels[i] = (flat_pixels[i] & ~1) | int(binary_hash[i])
+        flat_pixels[i] = np.uint8((int(flat_pixels[i]) & 0xFE) | int(binary_hash[i]))
 
     encoded_img = flat_pixels.reshape(img_array.shape)
     Image.fromarray(encoded_img).save(output_path, "PNG")
-
 
 def authentication_compare(image_path, password):
     """Extracts the stored hash from the image and compares it with the hash of the provided password."""
