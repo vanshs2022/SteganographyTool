@@ -26,13 +26,19 @@ def store_password():
     if image.filename == "":
         return render_template("password.html", message="No image selected for storing password!")
 
-    img_path = os.path.join(app.config["UPLOAD_FOLDER"], secure_filename(image.filename))
+    filename = secure_filename(image.filename)
+    img_path = os.path.join(app.config["UPLOAD_FOLDER"], filename)
     image.save(img_path)
     
-    hashed_img_path = os.path.join(app.config["UPLOAD_FOLDER"], "hashed_" + image.filename)
+    hashed_filename = "hashed_" + filename
+    hashed_img_path = os.path.join(app.config["UPLOAD_FOLDER"], hashed_filename)
 
     authentication_store(img_path, password, hashed_img_path)
-    return render_template("password.html", message="Password stored successfully!")
+
+    hashed_img_rel = os.path.join("tmp", hashed_filename)  
+
+    return render_template("password.html", message="Password stored successfully!", download_image=hashed_img_rel)
+
 
 @app.route("/compare_password", methods=["POST"])
 def compare_password():
